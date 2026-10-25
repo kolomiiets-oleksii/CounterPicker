@@ -42,7 +42,9 @@ import SwiftUI
 /// ```
 public struct CounterView: View {
     @State private var counter: Counter
+    @State private var availableWidth: CGFloat?
     @Binding private var reading: Double
+    @ScaledMetric(relativeTo: .title3) private var preferredScale: CGFloat = 1
 
     /// Creates a counter view with optional digit configuration.
     ///
@@ -65,21 +67,32 @@ public struct CounterView: View {
         )
     }
 
+    private var scale: CGFloat {
+        CounterLayout.scale(
+            preferred: preferredScale,
+            digitCount: counter.wholeDigits.count + counter.fractionDigits.count,
+            availableWidth: availableWidth
+        )
+    }
+
     public var body: some View {
-        VStack {
+        let scale = scale
+        FittingWidthLayout {
             HStack(spacing: 0) {
                 ForEach(counter.wholeDigits.indices, id: \.self) { index in
-                    DigitPickerView(value: $counter.wholeDigits[index], section: .whole)
+                    DigitPickerView(value: $counter.wholeDigits[index], section: .whole, scale: scale)
                 }
 
-                SeparatorView()
+                SeparatorView(scale: scale)
 
                 ForEach(counter.fractionDigits.indices, id: \.self) { index in
-                    DigitPickerView(value: $counter.fractionDigits[index], section: .fractions)
+                    DigitPickerView(value: $counter.fractionDigits[index], section: .fractions, scale: scale)
                 }
             }
+            .padding(.horizontal, CounterLayout.wheelOverlap / 2 * scale)
             .pickerStyle(.wheel)
         }
+        .onGeometryChange(for: CGFloat.self) { $0.size.width } action: { availableWidth = $0 }
         .onChange(of: counter.wholeDigits) { _, newValue in
             if let newNumber = counter.value() {
                 reading = newNumber

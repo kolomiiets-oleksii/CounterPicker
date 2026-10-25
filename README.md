@@ -25,6 +25,12 @@ A scrollable wheel picker that mimics mechanical counter displays. Features sepa
 
 Each digit column displays three rows (previous, current, next) creating a scroll-wheel effect. The main digits appear in dark text, the fractional digit in red, with a comma separator between them. Colors adapt to light/dark mode automatically.
 
+## Dynamic Type
+
+The digits, the wheel height and the separator grow with the user's text size, all by the same factor, so the proportions stay as designed. At the default text size nothing changes.
+
+The counter never becomes wider than its container. If the container is too narrow for the size Dynamic Type asks for, the whole counter shrinks until it fits, at every text size and for any number of digits. A wide container does not stretch it beyond the size Dynamic Type asks for. Give the view the width you have (for example with `.frame(width:)` or as part of a stack) and it adapts.
+
 ## Installation
 
 ### Swift Package Manager
@@ -33,7 +39,7 @@ Add CounterPicker to your project via SPM:
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/oleksiikolomiietssnapp/CounterPicker.git", from: "1.0.0")
+    .package(url: "https://github.com/oleksiikolomiietssnapp/CounterPicker.git", from: "1.1.0")
 ]
 ```
 
