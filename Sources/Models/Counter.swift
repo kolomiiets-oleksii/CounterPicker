@@ -1,6 +1,7 @@
 import Observation
 import SwiftUI
 
+@MainActor
 @Observable
 class Counter {
     private enum Constant {

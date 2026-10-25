@@ -2,6 +2,7 @@ import Testing
 
 @testable import CounterPicker
 
+@MainActor
 @Suite
 struct CounterTests {
     @Test("Counter initializes with default digit counts")

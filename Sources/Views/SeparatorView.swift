@@ -13,11 +13,13 @@ struct SeparatorView: View {
         static let separator: String = ","
     }
 
+    var scale: CGFloat = 1
+
     var body: some View {
         Text(Constant.separator)
-            .fontWeight(.bold)
-            .dynamicTypeSize(.xLarge)
-            .padding(.top)
+            .font(.system(size: CounterLayout.digitFontSize * scale, weight: .bold))
+            .frame(width: CounterLayout.separatorWidth * scale)
+            .padding(.top, 16 * scale)
     }
 }
 #endif
